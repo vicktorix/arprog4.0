@@ -16,7 +16,7 @@
             "request": "launch",
             "mainClass": "ej4.uno.a.App",
             "projectName": "app",
-            "args": "-9.87 -6.76 -7.45 --asc"
+            "args": "-1 -7 0 --asc"
         }
     ]
 }

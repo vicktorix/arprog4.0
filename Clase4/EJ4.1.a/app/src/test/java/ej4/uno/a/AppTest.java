@@ -3,12 +3,56 @@
  */
 package ej4.uno.a;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
     }
+
+    @Test void whenIncorrectArgsShouldShowError() {
+        String[] args = {"desc"};
+        App.main(args);
+        assertEquals(error1, outputStreamCaptor.toString().trim());
+    }
+
+    @Test void whenHelpArgShouldHelpOnConsole() {
+        String[] args = {"--help"};
+        App.main(args);
+        assertEquals(error0, outputStreamCaptor.toString().trim());
+    }
+
+    @Test void testOutputWithAscendentOrder() {
+        String[] args = {"-1","-7","0","--asc"};
+        App.main(args);
+        assertEquals("[-7.0,-1.0,0.0]", outputStreamCaptor.toString().trim());
+    }
+
+    @Test void testOutputWithDescendentOrder() {
+        String[] args = {"-1","-7","0","--desc"};
+        App.main(args);
+        assertEquals("[0.0,-1.0,-7.0]", outputStreamCaptor.toString().trim());
+    }
+
+    private static String error0 = "App.class es un programa para ordenar 3 números de manera ascendente o descendente\n\n"
+            +
+            "Uso: java App.class [nr1] [nr2] [nr3] [orden]\n\n" +
+            "nr1, nr2, nr3:\n\t" +
+            "Números enteros o flotantes\n" +
+            "Orden:\n\t" +
+            "-asc\tOrden ascendente\n\t" +
+            "-desc\tOrden descendente\n\n" +
+            "Ejemplo:\n\tjava App.class 34 5 78 --desc";
+
+    private static String error1 = "Error en los argumentos de comando para más información use \n java app.class --help";
 }
