@@ -9,46 +9,82 @@ import java.util.Scanner;
  * Hello world!
  *
  */
-public class App 
-{   
-    public static void main( String[] args )
-    {
-        System.out.println( "Programa que lee números de un archivo y los suma\n" +
-        "Uso: java App.class archivo\n" );
-        
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Programa que lee números de un archivo y los suma\n" +
+                "Uso: java App.class archivo\n");
+
         if (args.length > 0) {
-            float suma = sumarNumeros(args);
-            System.out.println("La suma de los números es: " + suma);
+            switch (args.length) {
+                case 1:
+                    initOper(args[0]);
+                    break;
+                default:
+                    initOper(args[0], args[1]);
+                    break;
+            }
         } else {
             System.out.println("No se indicó ningún archivo");
         }
     }
 
-    public static float sumarNumeros(String[] args) {
-        float suma = 0f;
-        Path f = Paths.get(args[0]);
+    private static void initOper(String filename) {
+        initOper(filename, "S");
+    }
+
+    private static void initOper(String filename, String operation) {
+        float acumulador = 0f;
+        String sumaString = "La suma ", prodcutoString = "El producto ";
+        if (operation.equals("S") || operation.equals("M")) {
+            acumulador = operarNumeros(filename, operation);
+        } else {
+            acumulador = operarNumeros(filename, "S");
+        }
+        mostrarResultado(acumulador, operation);
+    }
+
+    private static void mostrarResultado(float resultado, String operation) {
+        String sumaString = "La suma ", prodcutoString = "El producto ";
+        if(operation.equals("S")) {
+            System.out.println(sumaString + "de los números es: " + resultado);
+        } else {
+            System.out.println(prodcutoString + "de los números es: " + resultado);
+        }
+    }
+
+    public static float operarNumeros(String filename, String oper) {
+        float acumulador = 0f;
+        Path f = Paths.get(filename);
 
         System.out.println(f.toString());
+        if (oper.equals("M")) {
+            acumulador = 1;
+        }
 
         if (Files.exists(f) & Files.isReadable(f)) {
             try {
                 Scanner miEscaner = new Scanner(f);
-                while(miEscaner.hasNextLine()){
+                while (miEscaner.hasNextLine()) {
                     String sNum = miEscaner.nextLine();
                     try {
-                        suma += Float.parseFloat(sNum);
+                        if (oper.equals("S")) {
+                            acumulador += Float.parseFloat(sNum);
+                        } else {
+                            acumulador *= Float.parseFloat(sNum);
+                        }
+
                     } catch (Exception e) {
-                        //no-op
+                        // no-op
                     }
                 }
             } catch (Exception e) {
                 System.out.println("Error al acceder al archivo " + f.toAbsolutePath().toString());
             }
         } else {
-            System.out.println("El archivo " + f.toAbsolutePath().toString() + " no existe");  
+            System.out.println("El archivo " + f.toAbsolutePath().toString() + " no existe");
         }
-        
-        return suma;
+
+        return acumulador;
     }
 
 }
