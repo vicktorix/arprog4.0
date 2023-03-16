@@ -8,6 +8,14 @@
             "type": "java",
             "name": "App",
             "request": "launch",
+            "mainClass": "ej4.dos.App",
+            "projectName": "",
+            "args": "Clase4/Ej4.2/cuatrodos/src/main/java/ej4/dos/numeros.txt"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
             "mainClass": "ej4.uno.c.App",
             "projectName": "",
             "args": "X"

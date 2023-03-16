@@ -49,7 +49,6 @@ public class App {
                 if (isANumber(args[i])) {
                     nums[i] = Float.parseFloat(args[i]);
                 } else {
-                    System.out.println("num break;");
                     cant = i;
                     break;
                 }
