@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "ej4.uno.c.App",
             "projectName": "",
-            "args": "1 -56.78 -4 5 A x -3"
+            "args": "X"
         },
         {
             "type": "java",
