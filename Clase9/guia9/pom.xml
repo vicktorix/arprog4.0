@@ -4,7 +4,10 @@
   <groupId>com.argentina.programa</groupId>
   <artifactId>guia9</artifactId>
   <packaging>jar</packaging>
-  <version>v1.0</version>
+  <properties>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+    <version>v1.0</version>
   <name>guia9</name>
   <url>http://maven.apache.org</url>
   <dependencies>
